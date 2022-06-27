@@ -13,10 +13,13 @@ function displayAllProducts() {
       }
     })
     .then(function (products) {
+      console.log(products);
 
-// 5. Use forEach Method
+      // 5. Use forEach Method
 
       products.forEach(product => {
+
+        // products.forEach(function(product) {});
 
         console.log(product);
 
@@ -31,7 +34,7 @@ function displayAllProducts() {
 
         // You can also use this opportunity => productLink.href = `product.html?id=${product._id}`;
         // This is short way for setAttribute but use always "setAttribute" which is clear to understand the code
-       
+
         let article = document.createElement('article');
         productLink.appendChild(article);
 
@@ -54,7 +57,7 @@ function displayAllProducts() {
 
     })
     .catch(function (error) {
-     alert("⚠️ Error! Products are not shown!")
+      alert("⚠️ Error! Fetch()!")
     });
 }
 displayAllProducts();

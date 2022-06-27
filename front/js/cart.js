@@ -133,11 +133,12 @@ if (productLocalStorage) {
               let updatedQuantity = changeQuantity[i].value;
 
               if (updatedQuantity <= 0) {
-                alert('⚠️ You can not enter 0 and negatif values!');
+                alert('⚠️ You can NOT enter 0 and negatif values!');
                 changeQuantity[i].value = productLocalStorage[i].productQuantity;
               }
               else if (updatedQuantity > 100) {
-                alert('⚠️ Please enter a number which is smaller than 100!')
+                alert('⚠️ You can NOT enter a number gretaer than 100!');
+                changeQuantity[i].value = productLocalStorage[i].productQuantity;
               }
               else if (updatedQuantity >= 1 && updatedQuantity <= 100) {
                 productLocalStorage[i].productQuantity = changeQuantity[i].value;
@@ -162,8 +163,8 @@ if (productLocalStorage) {
             totalQuantity = 0;
           console.log(myCart);
 
-          for (var i = 0; i < myCart; ++i) {
-            totalQuantity += changeQuantity[i].valueAsNumber;
+          for (let i = 0; i < myCart; ++i) {
+            totalQuantity += changeQuantity[i].value;
           }
 
           let productTotalQuantity = document.getElementById('totalQuantity');
@@ -172,8 +173,8 @@ if (productLocalStorage) {
           // Calculate total price
           displayTotalPrice = 0;
 
-          for (var i = 0; i < myCart; ++i) {
-            displayTotalPrice += (changeQuantity[i].valueAsNumber * products.price);
+          for (let i = 0; i < myCart; ++i) {
+            displayTotalPrice += (changeQuantity[i].value * products.price);
           }
 
           let showTotalPrice = document.getElementById("totalPrice");

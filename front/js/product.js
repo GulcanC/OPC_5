@@ -1,5 +1,6 @@
 
 let queryString = window.location.search;
+console.log(window.location);
 
 let urlParams = new URLSearchParams(queryString);
 
@@ -33,7 +34,7 @@ function getProduct() {
         }
 
     }).catch((error) => {
-
+        alert('Error fetch()!')
 
     })
 }
@@ -92,21 +93,19 @@ function addProductToCart(product) {
             productId: productId,
             productColor: color.value,
             productQuantity: Number(quantity.value),
-
-            // productName: product.name,
-            // productDescription: product.description,
-            // productPrice: product.price,
-            // productImage: product.imageUrl,
-            // prductAltText: product.altTxt
-            // Number() converts a string to a number
         }
 
         // Store the values in the local storage
-        // Declare the varible "productLocalStorage", I want to call the saved products in the local storage in which I will add the keys and values 
+        // Declare the varible "productLocalStorageString", I want to call the saved products in the local storage in which I will add the keys and values 
         // The JSON.parse() method parses a JSON string and construct the JavaScript value or object described by the string
 
-        let productLocalStorage = JSON.parse(localStorage.getItem("product"));
-        console.log(productLocalStorage); // At first it is "null" 
+        let productLocalStorageString = localStorage.getItem("product");
+        console.log(productLocalStorageString); // At first it is "null" 
+
+        let productLocalStorage = JSON.parse(productLocalStorageString);
+        console.log(productLocalStorage);
+
+        // 💧💧💧💧💧💧💧 ask to mentor 
 
         if ((quantity.value == 0 || quantity.value == null) && (color.value == 0 || color.value == null)) {
             alert('⚠️ Please choose the quantity and a color!')
@@ -117,63 +116,49 @@ function addProductToCart(product) {
         else if (quantity.value == 0 || quantity.value == null) {
             alert('⚠️ Please choose the quantity greater than 0!')
         }
-        else if (quantity.value <= -1) {
-            alert('⚠️ You can not choose a negative value!')
+        else if (quantity.value <= -1 || quantity.value > 100) {
+            alert('⚠️ You can NOT choose a negative value and a value greater than 100!')
         }
-        else if (quantity.value > 0 && quantity.value <= 100) {
+        else if (quantity.value > 0 && quantity.value <= 100 && (color.value != 0 || color.value != null)) {
 
-            const massageCofirmation = () => {
+            const messageAlert = function() {
 
-                if (confirm(`
+                alert(`
                 ✅ The selected product was added to the cart! 
                 
                 ✔️ Product quantity: ${productProperties.productQuantity} 
                 ✔️ Product name: ${product.name} 
-                ✔️ Product color: ${productProperties.productColor}`)) {
-                    location.assign("cart.html")
-                    //  You can use an alternative way for "location.assign()" => window.location.href = "cart.html";
-                }
+                ✔️ Product color: ${productProperties.productColor}`);
             }
 
-            // Go to all the products and search for the product id and color. If a product id and color matches with my product filter method will return that product 
-            // and it will be stored in the filterProduct variable, I will add this product to the cart
-            // Filter() filters array content based on search criteria, here it will filter specific id and color
-            // FindIndex() 
+            if (productLocalStorage == null || productLocalStorage == 0) {
+                productLocalStorage.push(productProperties);
+                localStorage.setItem("product", JSON.stringify(productLocalStorage));
+                messageAlert();
+                location.assign("cart.html");
 
-            if (productLocalStorage) {
-
-                /*  const filterProduct = productLocalStorage.filter(
-                     (item) => item.id === productId && item.color === productColor
-                 ); */
-
+            } else {
                 const filterProduct = productLocalStorage.findIndex(
                     item => item.productId === productId && item.productColor === color.value);
 
                 console.log(filterProduct);
 
                 if (filterProduct >= 0) {
-                    let newQuantity = parseInt(productProperties.productQuantity) + parseInt(productLocalStorage[filterProduct].productQuantity);
+                    let newQuantity =  Number(productLocalStorage[filterProduct].productQuantity) + Number(productProperties.productQuantity);
                     productLocalStorage[filterProduct].productQuantity = newQuantity;
                     localStorage.setItem("product", JSON.stringify(productLocalStorage));
-                    massageCofirmation();
-
+                    messageAlert();
+                    location.assign("cart.html");
 
                 } else {
                     productLocalStorage.push(productProperties);
                     localStorage.setItem("product", JSON.stringify(productLocalStorage));
-                    massageCofirmation();
-
+                    messageAlert();
+                    location.assign("cart.html");
                 }
-
-            } else {
-
-                productLocalStorage = [];
-                productLocalStorage.push(productProperties);
-                localStorage.setItem("product", JSON.stringify(productLocalStorage));
-                massageCofirmation();
-
             }
-        } else {alert('⚠️ Product is not shown on the product page!')
+        } else {
+            alert('⚠️ Product is not shown on the product page!')
 
         }
 
@@ -181,7 +166,9 @@ function addProductToCart(product) {
 }
 
 
-
-
-
+  // Go to all the products and search for the product id and color. If a product id and color matches with my product filter method will return that product
+  // and it will be stored in the filterProduct variable, I will add this product to the cart
+  // Filter() filters array content based on search criteria, here it will filter specific id and color
+  // FindIndex() 
+   //  You can use an alternative way for "location.assign()" => window.location.href = "cart.html";
 
