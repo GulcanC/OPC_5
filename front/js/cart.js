@@ -94,9 +94,11 @@ if (productLocalStorage) {
         pDelete.setAttribute('class', "deleteItem");
         pDelete.innerText = "Supprimer";
 
-        pDelete.addEventListener('click', function () {
+        // pDelete.addEventListener('click', function () {
 
-          // remove 1 element at index i
+        pDelete.addEventListener('click', () => {
+
+          // remove 1 element at index i, if you write 2 it will delete 2 elements, fonciton flech
 
           productLocalStorage.splice(index, 1);
 
@@ -115,66 +117,72 @@ if (productLocalStorage) {
         });
 
         // FUNCTION CHANGE QUANTITY
-
+        var changeQuantity = document.querySelectorAll(".itemQuantity");
 
         function changeProductQuantity() {
 
-          let changeQuantity = document.querySelectorAll(".itemQuantity");
           console.log(changeQuantity);
 
           for (let i = 0; i < changeQuantity.length; i++) {
 
+            // 💧💧💧💧💧💧💧 ask to mentor neden string bunun sonucu, number olmasi gerekmez mi, string olunca da calisiyor
+            console.log(typeof changeQuantity[i].value);
+            console.log(typeof Number(changeQuantity[i].value));
+            // changeQuantity[i].addEventListener("change", function(event) {
+            // For input values use event change
             changeQuantity[i].addEventListener("change", (event) => {
 
               // event.preventDefault();
 
               event.stopPropagation();
 
-              let updatedQuantity = changeQuantity[i].value;
+              // 💧💧💧💧💧💧💧 yanlis sayi girdigimde alert mesagi kapatmak icin index kadar tiklamam gerekiyor
+
+              let updatedQuantity = Number(changeQuantity[i].value);
+              console.log(typeof updatedQuantity);
 
               if (updatedQuantity <= 0) {
                 alert('⚠️ You can NOT enter 0 and negatif values!');
-                changeQuantity[i].value = productLocalStorage[i].productQuantity;
+                // productLocalStorage[i].productQuantity = updatedQuantity;
               }
               else if (updatedQuantity > 100) {
-                alert('⚠️ You can NOT enter a number gretaer than 100!');
-                changeQuantity[i].value = productLocalStorage[i].productQuantity;
+                alert('⚠️ Please enter a number which is smaller than 100!');
+                // productLocalStorage[i].productQuantity = updatedQuantity;
               }
               else if (updatedQuantity >= 1 && updatedQuantity <= 100) {
-                productLocalStorage[i].productQuantity = changeQuantity[i].value;
+                productLocalStorage[i].productQuantity = updatedQuantity;
                 localStorage.setItem('product', JSON.stringify(productLocalStorage));
                 totalPrice();
               }
               window.location.reload();
             })
+
           }
+          // 💧💧💧💧💧💧💧 ask to mentor neden undefined bunun sonucu
+
+
         }
         changeProductQuantity();
 
         // FUNCTION TOTAL PRICE
 
         function totalPrice() {
-          changeQuantity = document.querySelectorAll(".itemQuantity");
-
           // Determine total quantity
 
-          // let changeQuantity = document.getElementsByClassName('itemQuantity');
-          let myCart = changeQuantity.length,
-            totalQuantity = 0;
-          console.log(myCart);
+          let totalQuantity = 0;
 
-          for (let i = 0; i < myCart; ++i) {
-            totalQuantity += changeQuantity[i].value;
+          for (let i = 0; i < changeQuantity.length; ++i) {
+            totalQuantity += Number(changeQuantity[i].value);
           }
 
           let productTotalQuantity = document.getElementById('totalQuantity');
           productTotalQuantity.innerText = totalQuantity;
 
           // Calculate total price
-          displayTotalPrice = 0;
+          let displayTotalPrice = 0;
 
-          for (let i = 0; i < myCart; ++i) {
-            displayTotalPrice += (changeQuantity[i].value * products.price);
+          for (let i = 0; i < changeQuantity.length; ++i) {
+            displayTotalPrice += Number((changeQuantity[i].value * products.price));
           }
 
           let showTotalPrice = document.getElementById("totalPrice");
@@ -186,10 +194,7 @@ if (productLocalStorage) {
 }
 
 // FORM
-
-let formSubmitButton = document.querySelector('.cart__order__form');
-
-var regExText = /^[a-zA-Z\s\'\-]{3,10}$/;
+var regExText = /^[a-zA-Z\s\'\-]{3,10}$/; // use regExText for three values; firstName, lastName and city
 var regExAddress = /^([a-zA-z0-9/\\''(),-\s]{2,255})$/;
 var regExEmail = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
 
@@ -207,18 +212,10 @@ function validateFirstName() {
     document.getElementById("firstNameErrorMsg").innerText = "⚠️ Please enter a valid name using 3-10 characters";
     return false;
   }
-
 }
-
-formSubmitButton.firstName.addEventListener('change', function () {
-  validateFirstName();
-});
-
-// Validate lastName
 
 function validatelastName() {
 
-  // For lastName you can use the same regEx => regExText
   let lastName = document.getElementById("lastName").value;
 
   if (regExText.test(lastName)) {
@@ -229,18 +226,10 @@ function validatelastName() {
     document.getElementById("lastNameErrorMsg").innerText = "⚠️ Please enter a valid last name using 3-10 characters";
     return false;
   }
-
 }
-
-formSubmitButton.lastName.addEventListener('change', function () {
-  validatelastName();
-});
-
-// Validate address
 
 function validateAddress() {
 
-  // For address you can use the same regEx => regExText
   let address = document.getElementById("address").value;
 
   if (regExAddress.test(address)) {
@@ -253,13 +242,8 @@ function validateAddress() {
   }
 }
 
-formSubmitButton.address.addEventListener('change', function () {
-  validateAddress();
-});
-
 function validateCity() {
 
-  // For address you can use the same regEx => regExText
   let city = document.getElementById("city").value;
 
   if (regExText.test(city)) {
@@ -272,13 +256,8 @@ function validateCity() {
   }
 }
 
-formSubmitButton.city.addEventListener('change', function () {
-  validateCity();
-});
-
 function validateEmail() {
 
-  // For address you can use the same regEx => regExText
   let email = document.getElementById("email").value;
 
   if (regExEmail.test(email)) {
@@ -290,8 +269,14 @@ function validateEmail() {
   }
 }
 
-formSubmitButton.email.addEventListener('change', function () {
-  validateEmail();
+var formSubmitButton = document.querySelector('.cart__order__form');
+
+formSubmitButton.addEventListener('change', function () {
+  validateFirstName(firstName);
+  validatelastName(lastName);
+  validateAddress(address);
+  validateCity(city);
+  validateEmail(email);
 });
 
 
@@ -300,35 +285,21 @@ console.log(formButton);
 
 formButton.addEventListener('click', event => {
   event.preventDefault();
-  const formValues = {
+
+  var contact = {
     firstName: document.getElementById('firstName').value,
     lastName: document.getElementById('lastName').value,
     address: document.getElementById('address').value,
     city: document.getElementById('city').value,
     email: document.getElementById('email').value,
   }
-  console.log(formValues);
-
-  // localStorage.setItem('formValues', JSON.stringify(formValues));
+  console.log(contact);
+  console.log(typeof contact.firstName);
 
   // put the form values in an object
   // put the values of the form and the selected products in an object to send to the server
 
-  const send = {
-    productLocalStorage,
-    formValues
-  }
-  console.log(send);
-
-  // Form values are strings, we have to convert string to an oject by using JSON.parse()
-
-  /* const dataLocalStorage = localStorage.getItem('formValues');
-  console.log(dataLocalStorage);
-
-  const dataLocalStorageObject = JSON.parse(dataLocalStorage);
-  console.log(dataLocalStorageObject); */
-
-  localStorage.setItem('formValues', JSON.stringify(formValues));
+  // 💧💧💧💧💧💧💧 string olarak ekleyebilir miyim
 
   if (firstName.value.length == 0 ||
     lastName.value.length == 0 ||
@@ -345,30 +316,39 @@ formButton.addEventListener('click', event => {
     alert('⚠️ Please choose a product!')
   }
   else {
+
     // getting values from the form to put them in the local storage
 
     // Puttting the object "formValues" in the local storage
     // This is an object, we have to send the values to the local storage as a string, so we must to convert object to a string by using JSON.stringfy()
 
     // put the contents of the local storage in the form field
+    localStorage.setItem('contact', JSON.stringify(contact));
 
     let products = [];
-    for (let i = 0; i < productLocalStorage.length; i++) {
-      products.push(productLocalStorage[i].productId);
-    }
-    console.log(products);
 
-    const userInfo = {
-      contact: {
-        firstName,
-        lastName,
-        address,
-        city,
-        email,
-      },
+    /* productLocalStorage.forEach(product => {
+      products.push(product.productId);
+
+    }); */
+
+    console.log(products);
+    console.log(typeof products);
+
+    // 💧💧💧💧💧💧💧 prducts fonksiyonu ne
+    // 💧💧💧💧💧💧💧 neden bunu goremiyorum local storagda 
+    
+    let userInfo = {
+      contact,
       products,
     }
+
+      // 💧💧💧💧💧💧💧 neden products array goremiyorum local storegda
+
     console.log(userInfo);
+    console.log(typeof userInfo);
+
+    // 💧💧💧💧💧💧💧  neden console goremiyorum
 
     fetch("http://localhost:3000/api/products/order", {
       method: 'POST',
@@ -378,26 +358,31 @@ formButton.addEventListener('click', event => {
         "Content-Type": "application/json"
       },
     })
-      .then((response) => response.json())
-      .then((info) => {
-        console.log(info);
-        localStorage.clear();
-        localStorage.setItem("orderId", info.orderId);
-
-        // 💧💧💧💧💧💧💧 ask to mentor 
-        localStorage.setItem('formValues', JSON.stringify(formValues));
-
-        // document.location.href = "confirmation.html";
-
-        location.href = `confirmation.html?id=${info.orderId}`
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        }
       })
-      .catch((error) => {
+      .then(function (info) {
+
+        console.log(info);
+
+        // 💧💧💧💧💧💧💧 bunu once yazabilir miyim 
+        // 💧💧💧💧💧💧💧 string olarak ekleyebilir miyim
+        // localStorage.setItem('formValues', JSON.stringify(formValues));
+
+        location.href = `confirmation.html?id=${info.orderId}`;
+
+        console.log(`confirmation.html?id=${info.orderId}`);
+
+        // localStorage.clear();
+      })
+      .catch(function (error) {
         alert("⚠️ Post error!");
+
       });
+
   }
+
 });
-
-
-
-
 

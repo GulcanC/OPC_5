@@ -102,10 +102,8 @@ function addProductToCart(product) {
         let productLocalStorageString = localStorage.getItem("product");
         console.log(productLocalStorageString); // At first it is "null" 
 
-        let productLocalStorage = JSON.parse(productLocalStorageString);
+        let productLocalStorage =JSON.parse(productLocalStorageString);
         console.log(productLocalStorage);
-
-        // 💧💧💧💧💧💧💧 ask to mentor 
 
         if ((quantity.value == 0 || quantity.value == null) && (color.value == 0 || color.value == null)) {
             alert('⚠️ Please choose the quantity and a color!')
@@ -116,10 +114,13 @@ function addProductToCart(product) {
         else if (quantity.value == 0 || quantity.value == null) {
             alert('⚠️ Please choose the quantity greater than 0!')
         }
-        else if (quantity.value <= -1 || quantity.value > 100) {
-            alert('⚠️ You can NOT choose a negative value and a value greater than 100!')
+        else if (quantity.value <= -1) {
+            alert('⚠️ You can NOT choose a negative value!')
         }
-        else if (quantity.value > 0 && quantity.value <= 100 && (color.value != 0 || color.value != null)) {
+        else if (quantity.value > 100) {
+            alert('⚠️ You can NOT choose a value greater!')
+        }
+        else if (quantity.value > 0 && quantity.value <= 100) {
 
             const messageAlert = function() {
 
@@ -132,6 +133,7 @@ function addProductToCart(product) {
             }
 
             if (productLocalStorage == null || productLocalStorage == 0) {
+                productLocalStorage = [];
                 productLocalStorage.push(productProperties);
                 localStorage.setItem("product", JSON.stringify(productLocalStorage));
                 messageAlert();
@@ -144,7 +146,7 @@ function addProductToCart(product) {
                 console.log(filterProduct);
 
                 if (filterProduct >= 0) {
-                    let newQuantity =  Number(productLocalStorage[filterProduct].productQuantity) + Number(productProperties.productQuantity);
+                    let newQuantity = Number(productProperties.productQuantity) + Number(productLocalStorage[filterProduct].productQuantity);
                     productLocalStorage[filterProduct].productQuantity = newQuantity;
                     localStorage.setItem("product", JSON.stringify(productLocalStorage));
                     messageAlert();
