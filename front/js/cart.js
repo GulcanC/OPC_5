@@ -294,7 +294,7 @@ formButton.addEventListener('click', event => {
     email: document.getElementById('email').value,
   }
   console.log(contact);
-  console.log(typeof contact.firstName);
+  console.log(typeof contact.firstName); // string
 
   // put the form values in an object
   // put the values of the form and the selected products in an object to send to the server
@@ -317,38 +317,34 @@ formButton.addEventListener('click', event => {
   }
   else {
 
-    // getting values from the form to put them in the local storage
+    // 💧💧💧💧💧💧💧 neden sadece ID aliyoruz neden tum bilgiler degil
 
-    // Puttting the object "formValues" in the local storage
-    // This is an object, we have to send the values to the local storage as a string, so we must to convert object to a string by using JSON.stringfy()
+    let products = []; // see id of selected product
 
-    // put the contents of the local storage in the form field
-    localStorage.setItem('contact', JSON.stringify(contact));
+    productLocalStorage.forEach(productSelected => {
+      products.push(productSelected.productId);
 
-    let products = [];
-
-    /* productLocalStorage.forEach(product => {
-      products.push(product.productId);
-
-    }); */
+    });
 
     console.log(products);
-    console.log(typeof products);
+    console.log(typeof products); // object
 
     // 💧💧💧💧💧💧💧 prducts fonksiyonu ne
     // 💧💧💧💧💧💧💧 neden bunu goremiyorum local storagda 
-    
+
     let userInfo = {
-      contact,
-      products,
+      contact, // object type
+      products,  // object type
     }
 
-      // 💧💧💧💧💧💧💧 neden products array goremiyorum local storegda
+    localStorage.setItem('contact', JSON.stringify(contact));
+    // 💧💧💧💧💧💧💧 neden products array goremiyorum local storegda
 
     console.log(userInfo);
-    console.log(typeof userInfo);
+    console.log(typeof userInfo);  // object
+    console.log(typeof contact); // object
 
-    // 💧💧💧💧💧💧💧  neden console goremiyorum
+    // 💧💧💧💧💧💧💧  neden console goremiyorum nasil gorucem bu bilgileri
 
     fetch("http://localhost:3000/api/products/order", {
       method: 'POST',
@@ -367,11 +363,15 @@ formButton.addEventListener('click', event => {
 
         console.log(info);
 
-        // 💧💧💧💧💧💧💧 bunu once yazabilir miyim 
-        // 💧💧💧💧💧💧💧 string olarak ekleyebilir miyim
+        // 💧💧💧💧💧💧💧 bunu once yazabilir miyim neden burada sadece belli isimleri kullanabiliyorum
+        // 💧💧💧💧💧💧💧 string olarak ekleyebilir miyim ajax nasil calisiyor
         // localStorage.setItem('formValues', JSON.stringify(formValues));
 
-        location.href = `confirmation.html?id=${info.orderId}`;
+        //  location.href = `confirmation.html?id=${info.orderId}`;
+
+       location.href = `confirmation.html?id=${info.orderId}`;
+
+        // location;assign neden calismiyor
 
         console.log(`confirmation.html?id=${info.orderId}`);
 

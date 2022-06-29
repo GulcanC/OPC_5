@@ -83,7 +83,14 @@ let addButton = document.getElementById("addToCart");
 let quantity = document.getElementById('quantity');
 let color = document.getElementById('colors');
 
+let productLocalStorageString = localStorage.getItem("product");
+console.log(productLocalStorageString); // At first it is "null" 
+
+let productLocalStorage = JSON.parse(productLocalStorageString);
+console.log(productLocalStorage);
+
 function addProductToCart(product) {
+
 
     addButton.addEventListener("click", (event) => {
 
@@ -99,11 +106,7 @@ function addProductToCart(product) {
         // Declare the varible "productLocalStorageString", I want to call the saved products in the local storage in which I will add the keys and values 
         // The JSON.parse() method parses a JSON string and construct the JavaScript value or object described by the string
 
-        let productLocalStorageString = localStorage.getItem("product");
-        console.log(productLocalStorageString); // At first it is "null" 
-
-        let productLocalStorage =JSON.parse(productLocalStorageString);
-        console.log(productLocalStorage);
+        
 
         if ((quantity.value == 0 || quantity.value == null) && (color.value == 0 || color.value == null)) {
             alert('⚠️ Please choose the quantity and a color!')
