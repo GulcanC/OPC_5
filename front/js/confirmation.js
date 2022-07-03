@@ -8,13 +8,11 @@ let urlParams = new URLSearchParams(StringOrderId);
 let orderId = urlParams.get("id");
 
 console.log(orderId);
-console.log(typeof orderId);
 
 const displayOrderId  = document.getElementById("orderId");
 
 displayOrderId.innerText = orderId;
 
-
-//  localStorage.clear();
+localStorage.clear();
 
 
