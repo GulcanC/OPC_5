@@ -1,6 +1,6 @@
-# Project 5 Kanap | Construisez un site e-commerce en JavaScript 
+# Project 5 Kanap | Construisez un site e-commerce en JavaScript  #
 
-## :pen: Visit the web site of Kanap
+## ▶️ Visit the web site of Kanap ##
 
 https://gulcanc.github.io/OPC_4/
 
