@@ -10,7 +10,15 @@ This is the front end and back end server for Project 5 of the Web Developer pat
 
 ## Technologies ##
 
-:pen: 
+:star: Fetch Method, GET, POST requests
+
+:star: setAttribute(name, value), appendChild(), createElement()
+
+:star: localStorage.getItem(), localStorage.setItem, JSON.parse(), JSON.stringify()
+
+:star: window.location.search, urlSearchParams.get
+
+:star: regular expressions
 
 ### Back end Prerequisites ###
 
