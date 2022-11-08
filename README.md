@@ -6,7 +6,7 @@ https://gulcanc.github.io/OPC_4/
 
 ## Kanap ##
 
-This is the front end and back end server for Project 5 of the Web Developer path.
+The backend has already been developed for this project, my goal is to dynamically integrate API elements into the different web pages with JavaScript.
 
 ## Technologies ##
 
