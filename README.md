@@ -14,7 +14,7 @@ This is the front end and back end server for Project 5 of the Web Developer pat
 
 :star: setAttribute(name, value), appendChild(), createElement()
 
-:star: localStorage.getItem(), localStorage.setItem, JSON.parse(), JSON.stringify()
+:star: localStorage.getItem(), localStorage.setItem(), JSON.parse(), JSON.stringify()
 
 :star: window.location.search, urlSearchParams.get
 
