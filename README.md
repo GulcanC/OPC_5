@@ -33,4 +33,8 @@ The server should run on `localhost` with default port `3000`. If the
 server runs on another port for any reason, this is printed to the
 console when the server starts, e.g. `Listening on port 3001`.
 
+## Open the App in your browser ###
+
+First be sure whether you have "live server" extension. If you have it, right click index.html file in your text editor and click "Open with live server".
+
 
